@@ -1,5 +1,5 @@
 可以按照以下步骤来部署和运行程序:
-1.请确保机器meerkat@wenda01v已经安装了Yaf框架, 并且已经加载入PHP;
+1.请确保机器meerkat@hostname已经安装了Yaf框架, 并且已经加载入PHP;
 2.把meerkat目录Copy到Webserver的DocumentRoot目录下;
 3.需要在php.ini里面启用如下配置，生产的代码才能正确运行：
 	yaf.environ="product"
