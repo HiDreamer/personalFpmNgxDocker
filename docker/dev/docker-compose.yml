@@ -1,0 +1,33 @@
+version: '2.0'
+services:
+    openresty:
+        environment:
+            - MY_IDC=dev
+        image: registry.hub.docker.com/470368655/yx_nginx:0.2
+        container_name: meerkat-openresty_${DEV_PORT}
+        volumes:
+            - "../conf/default.conf:/etc/nginx/conf.d/default.conf"
+            - "../../:/usr/share/nginx/html/"
+        links:
+            - fpm:fpm.localhost
+        networks:
+            - default
+        ports:
+            - "${DEV_PORT}:80"
+    fpm:
+        image: registry.hub.docker.com/470368655/php7.1-fpm:0.3
+        container_name: meerkat-fpm_${DEV_USER}-${DEV_PORT}
+        environment:
+            - MY_IDC=dev
+        volumes:
+            - "../../:/usr/share/nginx/html/"
+            - "../conf/zz-docker.conf:/usr/local/php/etc/php-fpm.d/zz-docker.conf"
+            - "../conf/docker.conf:/usr/local/php/etc/php-fpm.d/docker.conf"
+        expose:
+            - "9000"
+        networks:
+            - default
+networks:
+    default:
+        external:
+            name: ${DEV_USER}
